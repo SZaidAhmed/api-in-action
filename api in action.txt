@@ -1,0 +1,19 @@
+export async function getAddons(body , dispatch ) {
+    return new Promise(async (resolve, reject) => {
+        await axios.post(`${baseUrl}/product/add-ons/get`, body)
+            .then(async res => {
+                console.log(res.data)
+                if (res.data) {
+                    if (res.status === 200 && res.data.success) {
+                        await dispatch({
+                            type: GET_PRODUCT,
+                            payload: res.data
+                        });
+                        resolve(res)
+                    }
+                } 
+            }).catch((err) => {
+                reject(err)
+            })
+    })
+}
